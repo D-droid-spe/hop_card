@@ -1,0 +1,24 @@
+<!-- doctors_form.html -->
+{% include 'base.html'%}
+{% include 'navigation.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Details observation</title>
+</head>
+<body>
+    <h1>Add Details observation</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="numero_identite">malade ID:</label><br>
+        <input type="text" id="numero_identite" name="numero_identite"><br><br>
+        
+        <label for="remarks">Remarks:</label><br>
+        <textarea id="remarks" name="remarks" rows="4" cols="50"></textarea><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

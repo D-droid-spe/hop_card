@@ -1,0 +1,49 @@
+{% include 'base.html' %}
+{% include 'navigation.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Illness Information</title>
+</head>
+<body>
+    <h1>Patient Illness Information</h1>
+    <form action="/patient_illness_info/" method="GET">
+        <label for="numero_identite">Enter Illness ID:</label>
+        <input type="text" id="numero_identite" name="numero_identite" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>les Details de malade</h2>
+    {% if patient_illness %}
+    <ul>
+        <li><strong>Patient Name:</strong> {{ patient_illness.nom }} {{ patient_illness.prenom }}</li>
+<li><strong>Date of Birth:</strong> {{ patient_illness.date_naissance }}</li>
+<li><strong>Address at Birth:</strong> {{ patient_illness.adresse_naissance }}</li>
+<li><strong>Current Address:</strong> {{ patient_illness.adresse_actuelle }}</li>
+<li><strong>Phone Number:</strong> {{ patient_illness.numero_telephone }}</li>
+<li><strong>ID Number:</strong> {{ patient_illness.numero_identite }}</li>
+<li><strong>Status:</strong> {{ patient_illness.statut }}</li>
+<li><strong>Occupation:</strong> {{ patient_illness.occupation }}</li>
+<li><strong>Retired:</strong> {% if patient_illness.est_retraite %}Yes{% else %}No{% endif %}</li>
+<li><strong>Personal Contact:</strong> {{ patient_illness.contact_personnel }}</li>
+<li><strong>House Number:</strong> {{ patient_illness.numero_maison }}</li>
+<li><strong>Second Person's Number:</strong> {{ patient_illness.numero_deuxieme_personne }}</li>
+<li><strong>Chronic Disease Name:</strong> {{ patient_illness.nom_maladie_chronique }}</li>
+<li><strong>Disease Description:</strong> {{ patient_illness.description_maladie }}</li>
+<li><strong>les observation:</strong> {{ patient_illness.effets_maladie }}</li>
+<li><strong>Second Disease Description:</strong> {{ patient_illness.description_deuxieme_maladie }}</li>
+<li><strong>Second Disease Effects:</strong> {{ patient_illness.effets_deuxieme_maladie }}</li>
+<li><strong>Medications:</strong> {{ patient_illness.medicaments }}</li>
+<li><strong>Doctor's Contact:</strong> {{ patient_illness.contact_medecin }}</li>
+
+    </ul>
+    {% else %}
+    <p>No patient illness found with the provided ID.</p>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}
+

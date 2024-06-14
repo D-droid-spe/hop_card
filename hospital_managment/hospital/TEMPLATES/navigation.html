@@ -1,0 +1,89 @@
+
+{% load i18n %}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">HOPE CARD</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto ml-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+          </li>
+         
+          {% if not request.user.is_staff %}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Login
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'admin:login' %}">Admin</a></li>
+              <li><a class="dropdown-item" href="{% url 'login' %}">Doctore</a></li>
+              <li><a class="dropdown-item" href="{% url 'patient_illness_info' %}">Patient</a></li>
+              <li><a class="dropdown-item" href="{% url 'login' %}">agence de vouyage</a></li>
+              
+             
+            </ul> 
+          {% endif %}
+
+          {% if request.user.is_staff %}
+            
+           
+           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              malade
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+              <li><a class="dropdown-item" href="{% url 'patient_illness_info' %}">view malade</a></li>
+              <li><a class="dropdown-item" href="{% url 'doctors_form' %}">add remark</a></li>
+              </ul>
+          {% endif %}
+          
+          {% if request.user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">logout</a>
+
+
+          </li>
+         {% endif %}
+        </ul>
+        </div>
+
+
+        <form action="{% url 'set_language' %}" method="post" style="background-color: #333; color: #fff; padding: 20px;">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+          <label for="language-select" style="color: #fff;">Select Language:</label>
+          <select name="language" id="language-select" style="background-color: #555; color: #fff; border: none; padding: 5px;">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+              <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                  {{ language.name_local }} ({{ language.code }})
+              </option>
+              {% endfor %}
+          </select>
+          <br><br>
+          <button type="submit" style="background-color: #777; color: #fff; padding: 8px 20px; border: none; cursor: pointer;">Change Language</button>
+      </form>
+      
+      
+    </div>
+  </nav>
+  <style>
+    form{
+      background-color: black;
+    }
+  </style>
